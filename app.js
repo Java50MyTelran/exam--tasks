@@ -110,20 +110,21 @@ function f(a) {
 
 // firstFunction();
 // secondFunction();
+
+//HW #28
 class Deferred {
-    constructor(){
-        this.functions = [];
+    #functions
+    constructor() {
+        this.#functions = [];
     }
-    then(func){
-        this.functions.push(func);
+    then(fun) {
+        this.#functions.push(fun);
     }
-    resolve(res){
-        for(let i = 0; i <this.functions.length; i++) {
-            res = this.functions[i](res);
-        }
+    resolve(value) {
+        this.#functions.forEach(fun => value = fun(value))
     }
 }
-  
+
 const d = new Deferred()
 d.then(function(res){ console.log("1 ", res); return "a"; });
 
@@ -131,3 +132,6 @@ d.then(function(res){ console.log("2 ", res); return "b"; });
 
 d.then(function(res){ console.log("3 ", res); return "c"; });
 d.resolve('hello');
+// 1  hello 
+// 2  a 
+// 3  b 
